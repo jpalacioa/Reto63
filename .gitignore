@@ -1,12 +1,299 @@
-*.class
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+	<script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+	<script>
 
-# Package Files #
-*.jar
-*.war
-*.ear
+      function main() {
+        var stage = new createjs.Stage("demoCanvas");
+        stage.enableMouseOver(20);
+        stage.mouseEnabled = true;
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+
+        var circulo = new createjs.Shape();
+
+        var gfxLoaded = 0;
+        var bgImg = new Image();		 
+		var bg2Img = new Image();
+		var prIMG = new Image();
+        var chefIMG = new Image();
+		var prIMG2 = new Image();
+		var timeImage = new Image();
+		var  bg,bg2,pr1,pr2,tImage, chef;
+
+
+		//Circulos	
+		var circle = new createjs.Shape();
+		var circle2 = new createjs.Shape();
+		var circle3 = new createjs.Shape();
+		var circle4 = new createjs.Shape();
+		var circle5 = new createjs.Shape();
+	 
+
+		bgImg.src = 'bg.jpg'; 
+		bgImg.name = 'bg'; 
+		bgImg.onload = loadGfx; 
+
+		
+        chefImg.src = 'chef.png'; 
+        chefImg.name = 'chef'; 
+        chefImg.onload = loadGfx; 
+
+		bg2Img.src = 'bg2.jpg'; 
+		bg2Img.name = 'bg2'; 
+		bg2Img.onload = loadGfx;
+
+
+		timeImage.src='timeLine.png';
+		timeImage.name='time';
+		timeImage.onload=loadGfx;
+	
+
+		 function loadGfx(e) 
+		{ 
+		    if(e.target.name = 'bg'){
+		    	bg = new createjs.Bitmap(bgImg);
+		    } 
+		    if(e.target.name = 'bg2'){
+		    	bg2 = new createjs.Bitmap(bg2Img);
+		    }
+		    if(e.target.name = 'pr1'){
+		    	pr1 = new createjs.Bitmap(prIMG);
+		    }
+		    if(e.target.name = 'pr2'){
+		    	pr2 = new createjs.Bitmap(prIMG2);
+		    }
+		     if(e.target.name = 'chef'){
+		    	chef = new createjs.Bitmap(ChefImg);
+		    }
+		    if(e.target.name = 'time'){
+		    	tImage = new createjs.Bitmap(timeImage);
+		    }     		  		       		  		      
+		    gfxLoaded++; 		      
+		    if(gfxLoaded == 3){ 
+		        createjs.Ticker.setFPS(60);
+				createjs.Ticker.addEventListener("tick", tick);
+		        addGameView(); 
+		    } 
+		}
+
+		function addGameView(){
+			bg2.x = -1500;
+			pr2.x = -1496;
+			pr1.y = 400;
+			pr2.y = 400;
+			chef.y= 300
+			chef.x= 480
+
+
+			circulo.graphics.beginFill("Crimson").drawCircle(0, 0, 50);
+     
+  			circle.graphics.beginFill("#F0BF46").setStrokeStyle(2).beginStroke("#000000").drawCircle(0, 0, 15);
+			circle2.graphics.beginFill("#C64972").setStrokeStyle(2).beginStroke("#000000").drawCircle(0, 0, 15);
+			circle3.graphics.beginFill("#83C098").setStrokeStyle(2).beginStroke("#000000").drawCircle(0, 0, 15);
+			circle4.graphics.beginFill("#DF8655").setStrokeStyle(2).beginStroke("#000000").drawCircle(0, 0, 15);
+			circle5.graphics.beginFill("#53A6D6").setStrokeStyle(2).beginStroke("#000000").drawCircle(0, 0, 15);
+
+
+			stage.addChild(bg,bg2,pr1,pr2,tImage,circle,circle2,circle3,circle4,circle5,circulo,chef);	
+
+			circulo.x = 100;
+        	circulo.y = 190;	     		
+			
+        	circle.x = 190;
+        	circle.y = 100;
+
+        	circle2.x = 396;
+        	circle2.y = 100;
+
+        	circle3.x = 602;
+        	circle3.y = 100;
+
+        	circle4.x = 808;
+        	circle4.y = 100;
+
+        	circle5.x = 1012;
+        	circle5.y = 100;
+    	}
+
+    	function tick(event) {
+    		bg.x += 1; 
+		    bg2.x += 1;
+
+		    if(bg.x >= 1500){ 
+		        bg.x = -1500; 
+		    } 
+		    else if(bg2.x >= 1500){ 
+		        bg2.x = -1500; 
+		    }
+
+		    pr1.x += 3; 
+		    pr2.x += 3; 
+		    if(pr1.x >= 1496){ 
+		        pr1.x = -1496; 
+		    } 
+		    else if(pr2.x >= 1496){ 
+		        pr2.x = -1496; 
+		    }
+    		stage.update();
+    	} 
+
+    	    circle.addEventListener("mouseover", function(event) {
+    	    	circle.scaleX=1.4;
+		    	circle.scaleY=1.4;    		
+    		})
+
+    		circle.addEventListener("mouseout", function(event) {
+    	    	circle.scaleX=1;
+		    	circle.scaleY=1;    		
+    		})
+
+    		circle.addEventListener("click", function(event) {
+    	    
+
+    	    	if (circulo.x < event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	if (circulo.x > event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+
+	
+       
+    	    	};
+    	    	 		
+    		})
+    		
+    		/////////////////////////////////////////////////
+
+    		circle2.addEventListener("mouseover", function(event) {
+    	    	circle2.scaleX=1.4;
+		    	circle2.scaleY=1.4;    		
+    		})
+
+    		circle2.addEventListener("mouseout", function(event) {
+    	    	circle2.scaleX=1;
+		    	circle2.scaleY=1;    		
+    		})
+
+
+    		circle2.addEventListener("click", function(event) {
+    	    
+    	    	if (circulo.x < event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+          			circulo.scaleX=1.4;
+          			
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	if (circulo.x > event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	 		
+    		})
+
+
+
+
+    		circle3.addEventListener("mouseover", function(event) {
+    	    	circle3.scaleX=1.4;
+		    	circle3.scaleY=1.4;    		
+    		})
+
+    		circle3.addEventListener("mouseout", function(event) {
+    	    	circle3.scaleX=1;
+		    	circle3.scaleY=1;    		
+    		})
+
+
+    		circle3.addEventListener("click", function(event) {
+
+    	    
+    	    	if (circulo.x < event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	if (circulo.x > event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	 		
+    		})
+
+    		circle4.addEventListener("mouseover", function(event) {
+    	    	circle4.scaleX=1.4;
+		    	circle4.scaleY=1.4;    		
+    		})
+
+    		circle4.addEventListener("mouseout", function(event) {
+    	    	circle4.scaleX=1;
+		    	circle4.scaleY=1;    		
+    		})
+
+    		circle4.addEventListener("click", function(event) {
+    	    
+    	    	if (circulo.x < event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	if (circulo.x > event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	 		
+    		})
+
+
+    		circle5.addEventListener("mouseover", function(event) {
+    	    	circle5.scaleX=1.4;
+		    	circle5.scaleY=1.4;    		
+    		})
+
+    		circle5.addEventListener("mouseout", function(event) {
+    	    	circle5.scaleX=1;
+		    	circle5.scaleY=1;    		
+    		})
+    		
+    		circle5.addEventListener("click", function(event) {
+    	    
+    	    	if (circulo.x < event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	if (circulo.x > event.stageX) {
+    	    		createjs.Tween.get(circulo, {loop: false})
+          			.to({x: event.stageX}, 1000)
+					//createjs.Ticker.setFPS(60);
+       
+    	    	};
+    	    	 		
+    		})   
+    	}     
+	</script>
+</head>
+<body onload="main();">
+  <canvas id="demoCanvas" width="1200" height="600"></canvas>
+</body>
+</html>
